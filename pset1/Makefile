@@ -1,4 +1,4 @@
-TESTRUNNER=docker run -v $(shell pwd):/src -it --rm cs50 check50
+TESTRUNNER=docker run -v $(shell pwd):/src -it --rm xgess/cs50 check50
 
 all: mario mariotest
 .PHONY: all mario mariotest
