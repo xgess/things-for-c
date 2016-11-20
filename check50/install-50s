@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+
+DEST=/usr/local/bin
+
+# create opt dir
+mkdir -p /opt
+
+# install check50
+cd /opt \
+	&& git clone https://github.com/acondrat/check50.git \
+	&& cd check50 \
+	&& ln -s $(pwd)/SOURCES/opt/check50/bin/check50.js $DEST/check50
+
+
+# install style50
+cd /opt \
+	&& git clone https://github.com/melkisedek/style50.git \
+	&& cd style50 \
+	&& mkdir bin \
+	&& echo "#!/usr/bin/env sh" >> ./bin/style50 \
+	&& echo "java -jar $(pwd)/style50.jar \$1" >> ./bin/style50 \
+	&& install -dm 755 ./bin \
+	&& ln -s $(pwd)/bin/style50 $DEST/style50 \
+	&& chmod u+x,g+x,o+x $DEST/style50
+
+# vim: filetype=sh
