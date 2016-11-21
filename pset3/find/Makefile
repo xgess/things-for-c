@@ -1,9 +1,4 @@
-#
-# Makefile
-#
-# Computer Science 50
-# Problem Set 3
-#
+TESTRUNNER=docker run -v $(shell pwd):/src -it --rm xgess/cs50 check50
 
 all: find generate
 
@@ -15,3 +10,6 @@ generate: generate.c
 
 clean:
 	rm -f *.o a.out core find generate
+
+findtest: find
+	$(TESTRUNNER) 2015.fall.pset3.find helpers.c

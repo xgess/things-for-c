@@ -1,5 +1,6 @@
 **/.DS_Store
 **/*.o
+**/*.dSYM/**
 pset1/mario
 pset1/water
 pset1/hello
@@ -7,3 +8,5 @@ pset1/greedy
 pset2/initials
 pset2/caesar
 pset2/vigenere
+pset3/find/generate
+pset3/find/find
