@@ -1,9 +1,1 @@
-##Setup
-
-install docker
-
-##Running for Mario
-```
-cd ../pset1
-make mariotest
-```
+if you don't know why this is here, please don't look at it.
