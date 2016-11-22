@@ -25,6 +25,7 @@
 // constants
 #define DIM_MIN 3
 #define DIM_MAX 9
+#define SLEEPTIME 500000
 
 // board
 int board[DIM_MAX][DIM_MAX];
@@ -120,11 +121,11 @@ int main(int argc, string argv[])
         if (!move(tile))
         {
             printf("\nIllegal move.\n");
-            usleep(500000);
+            usleep(SLEEPTIME);
         }
 
         // sleep thread for animation's sake
-        usleep(500000);
+        usleep(SLEEPTIME);
     }
     
     // close log
@@ -153,13 +154,71 @@ void greet(void)
     usleep(2000000);
 }
 
+
+int x_coordinate_for_value(int value) {
+    for(int i=0; i<d; i++) {
+        for(int j=0; j<d; j++) {
+            if (board[i][j]==value) {
+                return i;
+            }
+        }
+    }
+    return 0;
+}
+
+
+int y_coordinate_for_value(int value) {
+    for(int i=0; i<d; i++) {
+        for(int j=0; j<d; j++) {
+            if (board[i][j]==value) {
+                return j;
+            }
+        }
+    }
+    return 0;
+}
+
+
+bool two_tiles_next_to_eachother(int a_x, int a_y, int b_x, int b_y) {
+    return (abs(a_x - b_x) == 1 && a_y == b_y) || (abs(a_y - b_y) == 1 && a_x == b_x);
+}
+
+bool swap_two_values(int first, int second) {
+    int a_x = x_coordinate_for_value(first);
+    int a_y = y_coordinate_for_value(first);
+    int b_x = x_coordinate_for_value(second);
+    int b_y = y_coordinate_for_value(second);
+
+    if (two_tiles_next_to_eachother(a_x, a_y, b_x, b_y)) {
+        // swap them
+        int temp = board[a_x][a_y];
+        board[a_x][a_y] = board[b_x][b_y];
+        board[b_x][b_y] = temp;
+        return true;
+    } else {
+        return false;
+    }
+}
+
 /**
  * Initializes the game's board with tiles numbered 1 through d*d - 1
  * (i.e., fills 2D array with values but does not actually print them).  
  */
 void init(void)
 {
-    // TODO
+    int counter = 0;
+    int max_value = (d * d) - 1;
+
+    for(int i=0; i<d; i++) {
+        for(int j=0; j<d; j++) {
+            board[i][j] = max_value - counter;
+            counter++;
+        }
+    }
+    if (max_value % 2 == 1) {
+        // odd number means the initial board needs to swap 1 and 2
+        swap_two_values(1, 2);
+    }
 }
 
 /**
@@ -167,7 +226,16 @@ void init(void)
  */
 void draw(void)
 {
-    // TODO
+    for(int i=0; i<d; i++) {
+        for(int j=0; j<d; j++) {
+            if (board[i][j]==0) {
+                printf("   _");
+            } else {
+                printf("%4d", board[i][j]);
+            }
+        }
+        printf("\n");
+    }
 }
 
 /**
@@ -176,8 +244,7 @@ void draw(void)
  */
 bool move(int tile)
 {
-    // TODO
-    return false;
+    return swap_two_values(tile, 0);
 }
 
 /**
@@ -186,6 +253,18 @@ bool move(int tile)
  */
 bool won(void)
 {
-    // TODO
-    return false;
+    int winning_tile_value = 1;
+
+    for(int i=0; i<d; i++) {
+        for(int j=0; j<d; j++) {
+            if (i == d-1 && j == d-1) {
+                // this is the blank space
+                break;
+            } else if (board[i][j] != winning_tile_value) {
+                return false;
+            };
+            winning_tile_value++;
+        }
+    }
+    return true;
 }
