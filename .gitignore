@@ -1,6 +1,8 @@
 **/.DS_Store
 **/*.o
 **/*.dSYM/**
+**/*~
+**/*.swp
 pset1/mario
 pset1/water
 pset1/hello
@@ -13,3 +15,6 @@ pset3/find/find
 pset3/fifteen/fifteen
 pset4/bmp/copy
 pset4/bmp/whodunnit
+pset4/bmp/resize
+pset4/bmp/test.bmp
+
