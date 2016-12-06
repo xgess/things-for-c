@@ -17,4 +17,5 @@ pset4/bmp/copy
 pset4/bmp/whodunnit
 pset4/bmp/resize
 pset4/bmp/test.bmp
-
+pset4/jpg/recover
+pset4/jpg/*.jpg
