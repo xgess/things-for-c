@@ -1,1 +1,1 @@
-if you don't know why this is here, please don't look at it.
+doin' cs50 so i can follow along with / help someone else. don't worry about it. Edit
